@@ -329,6 +329,13 @@ void SSP2_IRQHandler(void)
  *******************************************************************************/
 void BACKUP_IRQHandler(void)
 {
+    if (BKP_RTC_GetFlagStatus(BKP_RTC_FLAG_SECF) == SET)
+    {
+    }
+    if (BKP_RTC_GetFlagStatus(BKP_RTC_FLAG_ALRF) == SET)
+    {
+    }
+    MDR_BKP->RTC_CS |= 0x06;
 }
 
 /*******************************************************************************

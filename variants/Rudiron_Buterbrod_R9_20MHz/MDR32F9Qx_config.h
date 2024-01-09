@@ -38,7 +38,7 @@
  *
  * The MDR32F9Qx Standard Peripherals Library is full CMSIS compliant.
  *
- * Modified for Arduino_Core_Rudiron by Daniil Ignatev on 08.03.2022
+ * Modified for Arduino_Core_Rudiron_MDR32F9Qx by Daniil Ignatev on 08.03.2022
  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -77,7 +77,7 @@ extern "C"
 /* Target system parameters */
 /* RST_CLK generators frequencies in HZ */
 #define HSI_Value ((uint32_t)8000000)
-#define HSE_Value ((uint32_t)16000000)
+#define HSE_Value ((uint32_t)20000000)
 #define HSE2_Value ((uint32_t)25000000)
 #define LSI_Value ((uint32_t)40000)
 #define LSE_Value ((uint32_t)32768)
