@@ -3,6 +3,8 @@
 #include "MDR32F9Qx_port.h"
 #include "MDR32F9Qx_rst_clk.h"
 
+#include "DummyLibrary.h"
+
 #define ALL_PORTS_CLK (RST_CLK_PCLK_PORTA | RST_CLK_PCLK_PORTB | \
                        RST_CLK_PCLK_PORTC | RST_CLK_PCLK_PORTD | \
                        RST_CLK_PCLK_PORTE | RST_CLK_PCLK_PORTF)
@@ -26,6 +28,8 @@ void Init_All_Ports(void)
 
 int main(void)
 {
+    int dummy_variable = DummyFunction();
+
     Init_All_Ports();
 
     RST_CLK_PCLKcmd(RST_CLK_PCLK_PORTA, ENABLE);

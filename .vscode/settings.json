@@ -1,3 +1,5 @@
 {
-
+    "cmake.cmakePath": "${userHome}/Library/Arduino15/packages/Rudiron/tools/cmake/default/bin/cmake",
+    "cortex-debug.openocdPath.osx": "${userHome}/Library/Arduino15/packages/Rudiron/tools/openocd/default/bin/openocd",
+    "cortex-debug.armToolchainPath.osx": "${userHome}/Library/Arduino15/packages/Rudiron/tools/gcc-arm-none-eabi/default/bin"
 }
