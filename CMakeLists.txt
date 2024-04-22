@@ -24,54 +24,31 @@ set(platform "MDR32F9Qx")# Аппаратная платформа
 set(board_name "Rudiron_Buterbrod_R9_16MHz")# Модель платы
 set(f_cpu "64000000")# Максимальная частота процессора
 
-
 # Определение пути до Arduino15
 if(WIN32)
     set(ARDUINO15_DIR "$ENV{USERPROFILE}/AppData/Local/Arduino15")
+    # Генератор проекта
+    set(CMAKE_GENERATOR "Ninja")
+    set(CMAKE_MAKE_PROGRAM "${ARDUINO15_DIR}/packages/Rudiron/tools/ninja/default/ninja" CACHE FILEPATH "Path to Ninja executable")
+    message("Generator is set to ${CMAKE_GENERATOR}, located in ${CMAKE_MAKE_PROGRAM}")
 elseif(APPLE)
     set(ARDUINO15_DIR "$ENV{HOME}/Library/Arduino15")
+    set (CMAKE_GENERATOR "Unix Makefiles" CACHE INTERNAL "" FORCE)
 else()
     set(ARDUINO15_DIR "$ENV{HOME}/.arduino15")
+    set(CMAKE_GENERATOR "Ninja")
+    set(CMAKE_MAKE_PROGRAM "${ARDUINO15_DIR}/packages/Rudiron/tools/ninja/default/ninja" CACHE FILEPATH "Path to Ninja executable")
+    message("Generator is set to ${CMAKE_GENERATOR}, located in ${CMAKE_MAKE_PROGRAM}")
 endif()
 string(REPLACE "\\" "/" ARDUINO15_DIR ${ARDUINO15_DIR})
 message(STATUS "Arduino15 directory: ${ARDUINO15_DIR}")
 
 
-# Генератор проекта
-set(CMAKE_GENERATOR "Ninja")
-set(CMAKE_MAKE_PROGRAM "${ARDUINO15_DIR}/packages/Rudiron/tools/ninja/default/ninja" CACHE FILEPATH "Path to Ninja executable")
-#set (CMAKE_GENERATOR "Unix Makefiles" CACHE INTERNAL "" FORCE)
-message("Generator is set to ${CMAKE_GENERATOR}, located in ${CMAKE_MAKE_PROGRAM}")
-
-# Определение пути до последней версии ARDUIRON_CORE_RUDIRON_MDR32F9Qx
-set(VERSIONS_DIR "${ARDUINO15_DIR}/packages/Rudiron/hardware/MDR32F9Qx")
-file(GLOB VERSIONS RELATIVE ${VERSIONS_DIR} "${VERSIONS_DIR}/*")
-
-foreach(version ${VERSIONS})
-    if(NOT IS_DIRECTORY "${VERSIONS_DIR}/${version}")
-        list(REMOVE_ITEM VERSIONS ${version})
-    elseif(NOT version MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+$")
-        list(REMOVE_ITEM VERSIONS ${version})
-    endif()
-endforeach()
-
-list(SORT VERSIONS)
-list(GET VERSIONS -1 LATEST_VERSION)
-message("Latest version directory: ${LATEST_VERSION}")
-
-set(ARDUIRON_CORE_RUDIRON_MDR32F9Qx "${VERSIONS_DIR}/${LATEST_VERSION}")
-if(ARDUIRON_CORE_RUDIRON_MDR32F9Qx STREQUAL "")
-    message("Arduino_Core_Rudiron_MDR32F9Qx NOT FOUND. SPECIFY THE FULL PATH!")
-    #при необходимости укажите полный путь к Arduino_Core_Rudiron_MDR32F9Qx
-    set(ARDUIRON_CORE_RUDIRON_MDR32F9Qx "/../Arduino_Core_Rudiron_MDR32F9Qx")
-endif ()
-
-string(REPLACE "\\" "/" ARDUIRON_CORE_RUDIRON_MDR32F9Qx "${ARDUIRON_CORE_RUDIRON_MDR32F9Qx}")
-message(STATUS "ARDUIRON_CORE_RUDIRON_MDR32F9Qx PATH = ${ARDUIRON_CORE_RUDIRON_MDR32F9Qx}")
+# Определение пути до последней версии ARDUIRON_CORE_RUDIRON_MDR32F9Qx (не требуется)
 
 
 # Компилятор
-set(CMAKE_TOOLCHAIN_FILE "${ARDUIRON_CORE_RUDIRON_MDR32F9Qx}/arm-none-eabi-gcc.cmake")
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/arm-none-eabi-gcc.cmake")
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
